@@ -1,0 +1,118 @@
+<!-- api.openweathermap.org/data/2.5/weather?q=Pune&appid=679a0a57bc81a5a0392d68d55cc3d835 -->
+
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" integrity="sha512-z3gLpd7yknf1YoNbCzqRKc4qyor8gaKU1qmn+CShxbuBusANI9QpRohGBreCFkKxLhei6S9CQXFEbbKuqLg0DA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            background-color: lightgray; /* Light Blue Background */
+        }
+
+        .box {
+            background-color: #87CEEB; /* Semi-transparent white background */
+            width: 300px;
+            text-align: center;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.2);
+        }
+    </style>
+    <title>Document</title>
+</head>
+<body>
+    <div class="box">
+        <div class="wave -one"></div>
+        <div class="wave -two"></div>
+        <div class="wave -three"></div>
+
+        <div id="weathercon">
+            <i class="fa-solid fa-sun" style="color: #eccc68;"></i>
+        </div>
+
+        <div class="info">
+            <h2 class="location">
+                <i class="fa-solid fa-street-view"></i>
+                {%location%} | {%country%}
+            </h2>
+            <p class="date"></p>
+            <h1 class="temp">{%tempval%}&deg;K</h1>
+            <h3 class="tempmin_max">Min {%tempmin%}&deg;K | Max {%tempmax%}&deg;K</h3>
+        </div>
+    </div>
+    <script>
+        const curDate = document.querySelector(".date"); // Correctly select the element with class "date"
+
+        const tempstatus="{%tempstatus%}"
+        if(tempstatus=="Sunny"){
+            weathercon.innerHTML=
+            "<i class='fa-solid fa-sun' style='color: #eccc68;'></i>";
+        }else if(tempstatus=="Clouds"){
+            weathercon.innerHTML=
+            "<i class='fa-solid fa-cloud' style='color:#f1f2f6;'></i>";
+        }
+        else if(tempstatus=="Rainy"){
+            weathercon.innerHTML=
+            "<i class='fa-solid fa-cloud-rain' style='color:#a4b0be;'></i>";
+        }
+        else{
+            weathercon.innerHTML=
+            "<i class='fa-solid fa-cloud' style='color:#44c3de;'></i>"; 
+        }
+
+        const getCurrentDay = () => {
+            var weekday=new Array(7);
+            weekday[0]="Sunday";
+            weekday[1]="Monday";
+            weekday[2]="Tuesday";
+            weekday[3]="Wednesday";
+            weekday[4]="Thursday";
+            weekday[5]="Friday";
+            weekday[6]="Saturday";
+            let currentTime = new Date(); // Correct the typo
+            let day=weekday[currentTime.getDay()];
+            return day;
+        };
+        
+        const getCurrenttTime=()=>{
+
+            var months=[
+            "January", "February", "March", "April", "May", "June",
+            "July", "August", "September", "October", "November", "December"
+            ]
+            var now=new Date();
+            var month=months[now.getMonth()];
+            var date=now.getDate();
+
+            let hours=now.getHours();
+            let mins=now.getMinutes();
+
+            let period="AM";
+            if(hours>11){
+                period="PM";
+                if(hours>12) hours -=12;
+            }
+            if(mins<10){
+                min="0"+mins;
+            }
+            return `${month}: ${date} | ${hours}: ${mins}:${period}`;
+
+        };
+        curDate.innerHTML=getCurrentDay()+" "+" | "+getCurrenttTime();
+
+        
+
+    </script>
+</body>
+</html>
+
